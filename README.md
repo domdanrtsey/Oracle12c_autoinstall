@@ -3,6 +3,7 @@
 #### 脚本使用安装前配置
 
 > 需要使用root用户执行(尽量安装纯净的OS环境)
+下载脚本：https://github.com/domdanrtsey/Oracle12c_autoinstall.git
 
 1. 安装前请将Oracle 12C安装包（linuxamd64_12102_database_1of2.zip、 linuxamd64_12102_database_2of2.zip ）放置在 /opt/ 目录下（脚本提示是/opt,实际可随意存放）
 
