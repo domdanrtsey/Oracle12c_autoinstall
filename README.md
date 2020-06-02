@@ -3,7 +3,7 @@
 #### 脚本使用安装前配置
 
 > 需要使用root用户执行(尽量安装纯净的OS环境)
-下载脚本：https://github.com/domdanrtsey/Oracle12c_autoinstall.git
+> 下载脚本：https://github.com/domdanrtsey/Oracle12c_autoinstall.git
 
 1. 安装前请将Oracle 12C安装包（linuxamd64_12102_database_1of2.zip、 linuxamd64_12102_database_2of2.zip ）放置在 /opt/ 目录下（脚本提示是/opt,实际可随意存放）
 
@@ -156,11 +156,6 @@
    /u01/database/response/netca.rsp:LINE62: [oracle.net.ca]: command not found
    ```
 
-   
-
-7. 
-
-8. 
 
 ### 
 
@@ -168,53 +163,10 @@
 
 - CentOS 7.X 64
 
-> 注意: 在初始化cdb过程中如果出现 `No options to container mapping specified, no options will be installed in any containers` 信息不是报错，因为cdb初始化时间比较长，可以通过查看以上提示下给出的日志路径查看初始化情况
->
 > 熟知以上说明之后，开始操作安装部署
 
 ```shell
-# tree
-|--conf
-   |--db_install.rsp
-   |--dbca_single.rsp
-   |--initcdb.ora
-|--oracle12201_install.sh
-
-# chmod +x oracle12201_install.sh
-# sh -x oracle12201_install.sh
-```
-
-问题1：
-
-```shell
-$ dbca -silent -createDatabase -responseFile /ora01/database/response/dbca.rsp
-[FATAL] [DBT-11211] The Automatic Memory Management option is not allowed when the total physical memory is greater than 4GB.
-   CAUSE: The current total physical memory is 15GB.
-解决： automaticMemoryManagement=FALSE
-```
-
-问题2：
-
-```shell
-[FATAL] [DBT-06103] The port (5,500) is already in use.
-ACTION: Specify a free port.
-解决：hosts解析问题，eg：oracleip yb-oracle yb-oracle.example.com
-```
-
-问题3:
-
-```shell
-ORA-28040: 没有匹配的验证协议
-解决：在 $ORACLE_HOME/network/admin/sqlnet.ora
-  加入如下: 
-  SQLNET.ALLOWED_LOGON_VERSION=8
-```
-
-疑问：
-
-```shell
-initParams=undo_tablespace=UNDOTBS1,memory_target=726MB,processes=300,nls_language=AMERICAN,dispatchers=(PROTOCOL=TCP) 
-(SERVICE=orclXDB),db_block_size=8192BYTES,diagnostic_dest={ORACLE_BASE},audit_file_dest={ORACLE_BASE}/admin/{DB_UNIQUE_NAME}/adump,nls_territory=AMERICA,local_listener=LISTENER_ORCL,compatible=12.2.0,control_files=("{ORACLE_BASE}/oradata/{DB_UNIQUE_NAME}/control01.ctl", 
-"{ORACLE_BASE}/oradata/{DB_UNIQUE_NAME}/control02.ctl"),db_name=orcl,audit_trail=db,remote_login_passwordfile=EXCLUSIVE,open_cursors=300
+# chmod +x oracle12.1.0.2_install.sh
+# sh -x oracle12.1.0.2_install.sh
 ```
 
