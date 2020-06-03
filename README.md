@@ -163,6 +163,13 @@
 
 - CentOS 7.X 64
 
+> 说明：脚本已经配置oracle服务自启动，并配置为系统服务，启动与停止时使用root用户操作
+```shell
+停止
+#service oracle stop
+启动
+#service oracle start
+```
 > 熟知以上说明之后，开始操作安装部署
 
 ```shell
