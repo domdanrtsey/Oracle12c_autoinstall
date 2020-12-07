@@ -467,8 +467,11 @@ create or replace directory dir_dump as '$BACKUP_DIR';
 grant read,write on directory dir_dump to $USER_NAME;
 ALTER PROFILE DEFAULT LIMIT PASSWORD_LIFE_TIME UNLIMITED;
 alter system set processes=500 scope=spfile;
-alter system set sessions=555 scope=spfile;
+alter system set sessions=572 scope=spfile;
+shutdown immediate;
+startup mount;
 alter database archivelog;
+alter database open;
 exit
 EOF
 "
