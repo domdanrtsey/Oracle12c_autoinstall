@@ -217,11 +217,12 @@ fi
 E=`grep 'oracle' /etc/security/limits.conf`
 if [ ! -n "${E}" ];then
 cat << EOF >> /etc/security/limits.conf
-oracle soft nproc 2047
+oracle soft nproc 16384
 oracle hard nproc 16384
-oracle soft nofile 1024
+oracle soft nofile 65536
 oracle hard nofile 65536
-oracle soft stack 10240
+oracle soft memlock 4000000
+oracle hard memlock 4000000
 EOF
 else
     tail -5f /etc/security/limits.conf
@@ -336,6 +337,8 @@ sed -i "s/"^DECLINE_SECURITY_UPDATES=.*"/DECLINE_SECURITY_UPDATES=true/g" ${db_r
 ###starting to install oracle software
 echo "############################   Oracle Installing  #######################################"
 oracle_out='/tmp/oracle.out'
+touch ${oracle_out}
+chown ${ora_user}:${ora_group[0]} ${oracle_out}
 su - oracle -c "${install_dir}/runInstaller -silent -ignoreDiskWarning -ignoreSysPrereqs -ignorePrereq -responseFile ${db_response_file}" > ${oracle_out} 2>&1
 echo -e "\033[34mInstallNotice >>\033[0m \033[32moracle install starting \033[05m...\033[0m"
 sleep 60
