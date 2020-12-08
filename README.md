@@ -32,7 +32,7 @@
 
 4. OS提前配置以下信息(根据实际情况，配置如下信息)
 
-   - 配置本机静态IP地址 `HostIP`与 `hostname`
+   - 配置本机静态IP地址 `HostIP`与 `hostname`（主机名不允许包含下划线）
 
    - 脚本中Oracle用户密码 `ORACLE_OS_PWD`默认为`Danrtsey.com` 请根据需要在脚本中修改
 
