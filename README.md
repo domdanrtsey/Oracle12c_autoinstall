@@ -90,7 +90,20 @@
    Please input the zip file location(e.g:/opt/linuxamd64_12102_database_2of2.zip):
    ```
 
-   **数据库安装sys密码：**
+**选择数据库字符集与国家字符集：**
+
+   ```shell
+    脚本执行提示如下:
+    数据库字符集：
+    read -p 'Please input the CharacterSet(e.g:ZHS16GBK or AL32UTF8):' C1
+    Please input the CharacterSet(e.g:ZHS16GBK or AL32UTF8):
+    国家字符集：
+    read -p "Please input the NationalCharacterSet(e.g:AL16UTF16 or UTF8):" N1
+    Please input the NationalCharacterSet(e.g:AL16UTF16 or UTF8):
+   ```
+   
+**数据库安装sys密码：**
+
 
    ```shell
    installSysPassword=orcl20200202
