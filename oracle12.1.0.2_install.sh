@@ -20,7 +20,9 @@
 # 3.选择数据库字符集与国家字符集
 # CharacterSet: ZHS16GBK or AL32UTF8
 # NationalCharacterSet: AL16UTF16 or UTF8
-# 4.执行
+# 4.默认有开启归档，请根据情况删除该指令
+# alter database archivelog;
+# 5.执行
 # chmod + oracle12.1.0.2_install.sh
 # sh -x oracle12.1.0.2_install.sh
 #
