@@ -1,9 +1,9 @@
 #!/bin/bash
-####################  Steup 1 Install oracle software ####################
 #script_name: oracle_software.sh
 #Author: Danrtsey.Shun
 #Email:mydefiniteaim@126.com
 #auto_install_oracle12c version=12.1.0.2
+####################  Steup 1 Install oracle software ####################
 # attentions1:
 # 1.上传12c软件安装包至随意路径下,脚本提示路径是 /opt
 #
@@ -17,7 +17,10 @@
 #    ORACLE_OS_PWD="Danrtsey.com"   #
 #fi                                 #
 #####################################
-# 3.执行
+# 3.选择数据库字符集与国家字符集
+# CharacterSet: ZHS16GBK or AL32UTF8
+# NationalCharacterSet: AL16UTF16 or UTF8
+# 4.执行
 # chmod + oracle12.1.0.2_install.sh
 # sh -x oracle12.1.0.2_install.sh
 #
@@ -284,6 +287,38 @@ do
 done
 unzip ${zfiltwo} -d /${ora_dir} && chown -R ${ora_user}:${ora_group[0]}  /${ora_dir} && chmod -R 775 /${ora_dir}
 
+###set Oracle characterSet
+echo "############################   set characterSet  #######################################"
+count=0
+while [ $count -lt 3 ]
+do
+        read -p "Please input the CharacterSet(e.g:ZHS16GBK or AL32UTF8):" C1
+        read -p "Please input the CharacterSet again(ZHS16GBK or AL32UTF8):" C2
+        if [ "${C1}" == "${C2}" ];then
+                export CharacterSet=${C1}
+                break
+        else        
+                echo "You input characterSet not same."
+                count=$[${count}+1]
+        fi      
+done
+
+###set Oracle nationalCharacterSet
+echo "############################   set nationalCharacterSet  #######################################"
+count=0
+while [ $count -lt 3 ]
+do
+        read -p "Please input the NationalCharacterSet(e.g:AL16UTF16 or UTF8):" N1
+        read -p "Please input the NationalCharacterSet again(AL16UTF16 or UTF8):" N2
+        if [ "${N1}" == "${N2}" ];then
+                export NationalCharacterSet=${N1}
+                break
+        else        
+                echo "You input nationalCharacterSet not same."
+                count=$[${count}+1]
+        fi      
+done
+
 ###set Oracle install.db.starterdb installSysPassword
 echo "############################   set installSysPassword  #######################################"
 count=0
@@ -324,7 +359,7 @@ sed -i "s!oracle.install.db.KMDBA_GROUP=!oracle.install.db.KMDBA_GROUP=${ora_gro
 sed -i "s!oracle.install.db.config.starterdb.type=!oracle.install.db.config.starterdb.type=GENERAL_PURPOSE!g" ${db_response_file}
 sed -i "s!oracle.install.db.config.starterdb.globalDBName=!oracle.install.db.config.starterdb.globalDBName=${ORACLE_SID}!g" ${db_response_file}
 sed -i "s!oracle.install.db.config.starterdb.SID=!oracle.install.db.config.starterdb.SID=${ORACLE_SID}!g" ${db_response_file}
-sed -i "s!oracle.install.db.config.starterdb.characterSet=!oracle.install.db.config.starterdb.characterSet=AL32UTF8!g" ${db_response_file}
+sed -i "s!oracle.install.db.config.starterdb.characterSet=!oracle.install.db.config.starterdb.characterSet=${CharacterSet}!g" ${db_response_file}
 sed -i "s!oracle.install.db.config.starterdb.memoryLimit=!oracle.install.db.config.starterdb.memoryLimit=$[free_m*8/10]!g" ${db_response_file}
 sed -i "s!oracle.install.db.config.starterdb.password.ALL=!oracle.install.db.config.starterdb.password.ALL=${installSysPassword}!g" ${db_response_file}
 sed -i "s!oracle.install.db.config.starterdb.storageType=!oracle.install.db.config.starterdb.storageType=FILE_SYSTEM_STORAGE!g" ${db_response_file}
@@ -496,6 +531,7 @@ fi
 #NETCA=`find / -type f -name netca.rsp`
 NETCA=`find /${ora_dir} -type f -name netca.rsp`
 sed -i "s!INSTALL_TYPE=""typical""!INSTALL_TYPE=""custom""!g" ${NETCA}
+#MEM=$(grep -r 'MemTotal' /proc/meminfo | awk -F ' ' '{print int($2/1024/1024+1)}')
 MEM=`free -m|grep 'Mem:'|awk '{print $2}'`
 TOTAL=$[MEM*8/10]
 
@@ -504,7 +540,7 @@ echo "############################   Oracle listener&dbca  #####################
 su - oracle << EOF
 source ~/.bash_profile
 ${ORACLE_HOME}/bin/netca -silent -responsefile ${NETCA}
-dbca -silent -createDatabase -templateName General_Purpose.dbc -gdbname ${ORACLE_SID} -sid ${ORACLE_SID} -sysPassword ${SYSPASSWORD} -systemPassword ${SYSPASSWORD} -responseFile NO_VALUE -datafileDestination ${DATAFILE} -redoLogFileSize 1000 -recoveryAreaDestination ${RECOVERY} -storageType FS -characterSet AL32UTF8 -nationalCharacterSet UTF8 -sampleSchema false -memoryPercentage 80 -totalMemory $TOTAL -databaseType OLTP -emConfiguration NONE
+dbca -silent -createDatabase -templateName General_Purpose.dbc -gdbname ${ORACLE_SID} -sid ${ORACLE_SID} -sysPassword ${SYSPASSWORD} -systemPassword ${SYSPASSWORD} -responseFile NO_VALUE -datafileDestination ${DATAFILE} -redoLogFileSize 1000 -recoveryAreaDestination ${RECOVERY} -storageType FS -characterSet ${CharacterSet} -nationalCharacterSet ${NationalCharacterSet} -sampleSchema false -memoryPercentage 80 -totalMemory $TOTAL -databaseType OLTP -emConfiguration NONE
 EOF
 
 sed -i "s!${ORACLE_SID}:${ORACLE_HOME}:N!${ORACLE_SID}:${ORACLE_HOME}:Y!g" /etc/oratab
