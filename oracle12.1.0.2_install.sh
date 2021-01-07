@@ -380,7 +380,7 @@ su - oracle -c "${install_dir}/runInstaller -silent -ignoreDiskWarning -ignoreSy
 echo -e "\033[34mInstallNotice >>\033[0m \033[32moracle install starting \033[05m...\033[0m"
 sleep 60
 installActionslog=`find /tmp -name installActions*`
-echo "You cat check the oracle install log command: tail -100f ${installActionslog}"
+echo "You can check the oracle install log command: tail -100f ${installActionslog}"
 while true; do
   grep '[FATAL] [INS-10101]' ${oracle_out} &> /dev/null
   if [[ $? == 0 ]];then
