@@ -28,8 +28,6 @@
    # yum -y localinstall *.rpm
    ```
 
-   
-
 4. OS提前配置以下信息(根据实际情况，配置如下信息)
 
    - 配置本机静态IP地址 `HostIP`与 `hostname`（主机名不允许包含下划线）
@@ -37,14 +35,18 @@
    - 脚本中Oracle用户密码 `ORACLE_OS_PWD`默认为`Danrtsey.com` 请根据需要在脚本中修改
 
    - 脚本默认的`processes`与`sessions`值 如下，请根据实际直接在脚本中修改
+   - 默认开启归档
 
      ```shell
+     配置processes与sessions值：
      alter system set processes=500 scope=spfile;
-     alter system set sessions=555 scope=spfile;
+     alter system set sessions=572 scope=spfile;
+     开启开启
+     shutdown immediate;
+     startup mount;
+     alter database archivelog;
+     alter database open;
      ```
-
-     
-
 5. 预先将需要修改的配置信息记录下来，安装时根据脚本提示直接粘贴即可，涉及的信息如下
 
    **数据库的SID名称：**
