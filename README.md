@@ -161,17 +161,6 @@
 
    
 
-6. 脚本执行忽略如下错误提示
-
-   ```shell
-   /u01/database/response/netca.rsp:行30: [GENERAL]: 未找到命令
-   /u01/database/response/netca.rsp:行62: [oracle.net.ca]: 未找到命令
-   或是
-   /u01/database/response/netca.rsp:LINE30: [GENERAL]: command not found
-   /u01/database/response/netca.rsp:LINE62: [oracle.net.ca]: command not found
-   ```
-
-
 ### 
 
 #### 支持系统
