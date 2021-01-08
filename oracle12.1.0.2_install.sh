@@ -32,9 +32,6 @@
 # 1.according to the different environment to set the processes && sessions value
 # alter system set processes=500 scope=spfile;
 # alter system set sessions=555 scope=spfile;
-# 2.ignore these warnings
-# /u01/database/response/netca.rsp:LINE30: [GENERAL]: command not found
-# /u01/database/response/netca.rsp:LINE62: [oracle.net.ca]: command not found
 ########################################
 
 export PATH=$PATH
@@ -531,7 +528,7 @@ else
         export RECOVERY=${ORACLE_BASE}/flash_recovery_area
 fi
 #NETCA=`find / -type f -name netca.rsp`
-NETCA=`find /${ora_dir} -type f -name netca.rsp`
+NETCA=`find /${ora_dir}/database -type f -name netca.rsp`
 sed -i "s!INSTALL_TYPE=""typical""!INSTALL_TYPE=""custom""!g" ${NETCA}
 #MEM=$(grep -r 'MemTotal' /proc/meminfo | awk -F ' ' '{print int($2/1024/1024+1)}')
 MEM=`free -m|grep 'Mem:'|awk '{print $2}'`
