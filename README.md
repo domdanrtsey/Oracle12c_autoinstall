@@ -41,7 +41,7 @@
      配置processes与sessions值：
      alter system set processes=500 scope=spfile;
      alter system set sessions=572 scope=spfile;
-     开启开启
+     开启归档
      shutdown immediate;
      startup mount;
      alter database archivelog;
