@@ -487,8 +487,9 @@ DB_SHUT=${ORACLE_HOME}/bin/dbshut
 DB_START=${ORACLE_HOME}/bin/dbstart
 DATA_DIR=${ORACLE_BASE}/data
 BACKUP_DIR=${ORACLE_BASE}/backup
-
 [ ! -f $BACKUP_DIR ] && mkdir $BACKUP_DIR
+backup_dir=`echo ${BACKUP_DIR}|awk -F '/' '{print $2}'`
+chown -R ${ora_user}:${ora_group[0]}  /${backup_dir}
 
 CDB_SQL="
 sqlplus / as sysdba << EOF
