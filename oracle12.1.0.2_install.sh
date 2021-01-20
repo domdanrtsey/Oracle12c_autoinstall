@@ -31,7 +31,7 @@
 ########################################
 # 1.according to the different environment to set the processes && sessions value
 # alter system set processes=500 scope=spfile;
-# alter system set sessions=555 scope=spfile;
+# alter system set sessions=572 scope=spfile;
 ########################################
 
 export PATH=$PATH
@@ -213,8 +213,6 @@ fs.aio-max-nr = 1048576
 fs.file-max = 6815744
 EOF
 /sbin/sysctl -p
-else
-    tail -11f /etc/sysctl.conf
 fi
 E=`grep 'oracle' /etc/security/limits.conf`
 if [ ! -n "${E}" ];then
@@ -226,8 +224,6 @@ oracle hard nofile 65536
 oracle soft memlock 4000000
 oracle hard memlock 4000000
 EOF
-else
-    tail -5f /etc/security/limits.conf
 fi
 F=`grep 'ORACLE_SID' /home/${ora_user}/.bash_profile`
 if [ ! -n "${F}" ];then
@@ -237,8 +233,6 @@ export ORACLE_BASE=${ORACLE_BASE}
 export ORACLE_HOME=${ORACLE_HOME}
 export PATH=\$PATH:\$ORACLE_HOME/bin
 EOF
-else
-    tail -4f /home/${ora_user}/.bash_profile
 fi
 G=`grep 'oracle' /etc/profile`
 if [ ! -n "${G}" ];then
@@ -252,8 +246,7 @@ if [ \$USER = "oracle" ];then
     fi
 fi
 EOF
-else
-    tail -8f /etc/profile
+source /etc/profile
 fi
 
 ###unzip the install package and set response file
